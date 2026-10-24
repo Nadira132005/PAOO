@@ -1,0 +1,5 @@
+add_library(lab STATIC src/Device.cpp src/Inventory.cpp)
+add_library(Lab::lab ALIAS lab)
+target_compile_features(lab PUBLIC cxx_std_17)
+set_target_properties(lab PROPERTIES CXX_EXTENSIONS OFF)
+target_include_directories(lab PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
