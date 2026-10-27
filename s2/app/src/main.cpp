@@ -32,11 +32,11 @@ static void demonstrations() {
     MeasurementSession snapshot(session); snapshot.device(0).setReading(0, 77); snapshot.addNote("Changed snapshot");
     check(session.device(0).reading(0) == 20 && session.noteCount() == 1 && snapshot.noteCount() == 2, "Session copy constructor: independent snapshot");
     MeasurementSession archive(std::move(snapshot));
-    check(archive.device(0).reading(0) == 77 && archive.note(1) == "Changed snapshot" && snapshot.deviceCount() == 0, "Session move constructor: archived snapshot");
+    check(archive.device(0).reading(0) == 77 && archive.note(0) == "Initial observation" && archive.note(1) == "Changed snapshot" && snapshot.deviceCount() == 0 && snapshot.noteCount() == 0, "Session move constructor: archived snapshot");
     MeasurementSession assignedSession("unused"); assignedSession = session; assignedSession.device(0).setReading(1, 66);
     check(session.device(0).reading(1) == 24 && assignedSession.device(0).reading(1) == 66, "Session copy assignment: independent snapshot");
     MeasurementSession movedSession("unused"); movedSession = std::move(assignedSession);
-    check(movedSession.device(0).reading(1) == 66 && assignedSession.deviceCount() == 0, "Session move assignment: transferred snapshot");
+    check(movedSession.device(0).reading(1) == 66 && movedSession.note(0) == "Initial observation" && assignedSession.deviceCount() == 0 && assignedSession.noteCount() == 0, "Session move assignment: transferred snapshot");
 }
 
 static void menu() {

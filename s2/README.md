@@ -2,7 +2,8 @@
 
 The C++17 application manages devices, timestamped readings and measurement
 sessions. Devices grow their owned reading arrays as needed and calculate minimum,
-maximum and average values. Sessions own devices and notes; copying a session
+maximum and average values. Sessions own devices and a dynamically allocated notes array; their destructor
+releases the array. Copying a session
 creates an independent snapshot, and moving one transfers its contents.
 
 `Device` and `MeasurementSession` each define copy and move constructors and
